@@ -1,25 +1,40 @@
-import { AuthCredentialsValidator } from "@/lib/validators/account-credentials-validator";
-import { publicProcedure, router } from "./trpc";
-import { getPayLoadClient } from "@/get-Payload";
-import { TRPCError } from "@trpc/server";
+import { getPayLoadClient } from '../get-Payload'
+import { AuthCredentialsValidator } from '../lib/validators/account-credentials-validator'
+import { publicProcedure, router } from './trpc'
 
-import { Payload } from "payload";
+import { TRPCError } from '@trpc/server'
+
 
 export const authRouter = router({
-    createPayLoadUser : publicProcedure.input(AuthCredentialsValidator).mutation(async({input})=>{
-        const {email,password} = input
-        const payload = await getPayLoadClient
+  createPayloadUser: publicProcedure
+    .input(AuthCredentialsValidator)
+    .mutation(async ({ input }) => {
+      const { email, password } = input
+      const payload = await getPayLoadClient()
 
-        const {docs:users} = await payload.find({
-            collection:"users",
-            where:{
-                email:{
-                    equals:email,
-                }
-            }
-        })
-            if(users.lenght !==0) throw new TRPCError({code:'CONFLICT'})
-            await payload.create({
-        collection:"users",data:{}})
-    })
+      // check if user already exists
+      const { docs: users } = await payload.find({
+        collection: 'users',
+        where: {
+          email: {
+            equals: email,
+          },
+        },
+      })
+
+      if (users.length !== 0)
+        throw new TRPCError({ code: 'CONFLICT' })
+
+      await payload.create({
+        collection: 'users',
+        data: {
+          email,
+          password,
+          role:"user"
+        },
+      })
+        return{sucess:true, sendToEmail:email}
+    
+    }),
+
 })

@@ -3,14 +3,24 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { slateEditor } from '@payloadcms/richtext-slate';
 import path from "path"
+import { Users } from './collections/Users'
+
+import dovenv from "dotenv"
+
+dovenv.config({
+    path: path.resolve(__dirname,"../.env")
+})
+
 
 export default buildConfig({
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
-    collections: [],
+    collections: [Users],
     routes: {
         admin: '/sell'
     },
-    admin: {bundler: webpackBundler(),
+    admin: 
+    {    user:"users",
+    bundler: webpackBundler(),
     meta:{titleSuffix: '-DitialWhale',
     favicon: "/favicon.ico",
     ogImage: '/thumbnail.jpg',}},

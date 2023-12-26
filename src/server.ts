@@ -19,7 +19,7 @@ const start = async () => {
     },
   });
 
-  app.use('api/trpc',trpcExpress.createExpressMiddleware({
+  app.use('/api/trpc',trpcExpress.createExpressMiddleware({
     router:appRouter,
     createContext
   }))

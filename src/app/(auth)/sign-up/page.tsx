@@ -15,10 +15,15 @@ import { trpc } from "@/trpc/client";
 const Page = () =>{
 
     const  {register , handleSubmit ,formState:{errors}} = useForm<TAuthCredentialsValidator>({resolver:zodResolver(AuthCredentialsValidator)})
-    const {data} = <trpc className="anyApiRoute"></trpc>.useQuery()
-    console.log(data)
-    const  onSubmit = ({email,password}:TAuthCredentialsValidator) =>{
+    const {mutate , isLoading  } = trpc.auth.createPayloadUser.useMutation({
 
+    })
+
+
+
+    const  onSubmit = ({email,password}:TAuthCredentialsValidator) =>{
+        mutate({email,password})
+        console.log({email,password})
     }
 return(
     <>
@@ -36,14 +41,14 @@ return(
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid gap-2">
                         <div className="grid gap-1 py-2">
-                            <Label {...register("email")}htmlFor="email">Email</Label>
-                            <Input className={cn({"focus-visible:ring-red-500":errors.email})}placeholder="You@example.com"/>
+                            <Label htmlFor="email">Email</Label>
+                            <Input  {...register("email")}className={cn({"focus-visible:ring-red-500":errors.email})}placeholder="You@example.com"/>
                         </div>
                         <div className="grid gap-1 py-2">
-                            <Label {...register("password")} htmlFor="password">Password</Label>
-                            <Input className={cn({"focus-visible:ring-red-500":errors.password})}placeholder="Password"/>
+                            <Label htmlFor="password">Password</Label>
+                            <Input  {...register("password")} type='password' className={cn({"focus-visible:ring-red-500":errors.password})}placeholder="Password"/>
                         </div>
-                        <Button>Sing up</Button>
+                        <Button>Sign up</Button>
                     </div>
                 </form>
             </div>

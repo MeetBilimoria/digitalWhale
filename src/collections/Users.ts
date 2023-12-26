@@ -1,14 +1,25 @@
 import { CollectionConfig } from "payload/types";
 
-const Users: CollectionConfig = {
+export const Users: CollectionConfig = {
   slug: "users",
+  auth:true,
+  access:{
+    read:()=>true,
+    create:()=>true,
+  },
   fields: [
     {
       name: "role",
+      defaultValue:'user',
+      required:true,
+      admin:{
+        // condition:()=> false,
+        // condition:({req})=> req.user.role === "admin"
+      },
       type: "select",
       options: [
         { label: "Admin", value: "admin" },
-        {label: "Users" , value:"users"}
+        {label: "User" , value:"user"}
         ],
     },
   ],
