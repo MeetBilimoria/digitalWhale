@@ -14,16 +14,19 @@ import {toast} from "sonner"
 import { ZodError } from "zod";
 import { router } from "@/trpc/trpc";
 import { useReducer } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 const Page = () =>{
 
+    const searchParams =  useSearchParams()
+    const isSeller = searchParams.get('as') === 'seller'
+    const origin = searchParams.get('origin')
     const  {register , handleSubmit ,formState:{errors}} = useForm<TAuthCredentialsValidator>({resolver:zodResolver(AuthCredentialsValidator)})
 
     const router = useRouter()
 
-    const {mutate , isLoading  } = trpc.auth.createPayloadUser.useMutation({
+    const {mutate , isLoading  } = trpc.auth.signIn.useMutation({
         onError:(err)=>{
             if(err.data?.code === 'CONFLICT'){
                 toast.error("This Email is Already in use.Sign-In instead?")
@@ -55,9 +58,9 @@ return(
             <div className="flex flex-col items-center space-y-2 text-center">  
                 <Icons.logo className="h-20 w-20"/>
                 <h1 className="text-2xl font-bold">
-                    Create an Account
+                    Sign in to your Account
                 </h1>
-                <Link className={buttonVariants({variant:"link", className:"gap-1.5"})} href='/sign-in'>Already have an Account? <ArrowRight className="h-4 w-4 "/></Link>
+                <Link className={buttonVariants({variant:"link", className:"gap-1.5"})} href='/sign-up'>Don&apos;t have an Account? <ArrowRight className="h-4 w-4 "/></Link>
             </div>
             <div className="grid gap-6">
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -72,9 +75,18 @@ return(
                             <Input  {...register("password")} type='password' className={cn({"focus-visible:ring-red-500":errors.password})}placeholder="Password"/>
                             {errors?.password && (<p className="text-sm text-red-500">{errors.password.message}</p>)}
                         </div>
-                        <Button>Sign up</Button>
+                        <Button>Sign In</Button>
                     </div>
                 </form>
+                <div className="relative ">
+                    <div aria-hidden="true" className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t"></span>
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">or</span>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

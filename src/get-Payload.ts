@@ -2,11 +2,22 @@ import dotenv from "dotenv";
 import path from "path";
 import payload, { Payload } from "payload";
 import type { InitOptions } from "payload/config";
+import nodemailer from "nodemailer"
 
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
 });
 
+const transpoter  = nodemailer.createTransport({
+  host:"smtp.resend.com",
+  secure:true,
+  port:465,
+  auth:{
+    user:'resend',
+    pass:process.env.Resend_api_key
+  }
+
+})
 let cached = (global as any).payload;
 
 if (!cached) {
@@ -34,6 +45,7 @@ export const getPayLoadClient = async ({
   if (!cached.promise) {
     // Await the payload.init() call before assigning it to cached.promise
     cached.promise = await payload.init({
+      email:{transport:transpoter,fromAddress:"onboarding@resend.dev",fromName:"DigitalWhale"},
       secret: process.env.PAYLOAD_SECRET,
       local: initOptions?.express ? false : true,
       ...(initOptions || {}),
