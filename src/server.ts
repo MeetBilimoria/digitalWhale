@@ -13,7 +13,7 @@ const createContext =({req,res}:trpcExpress.CreateExpressContextOptions)=>({req,
 
 export type ExpressContext = inferAsyncReturnType<typeof createContext>
 const start = async () => {
-  const payload = await getPayLoadClient({
+  const payload = await getPayLoadClient({  
     initOptions: {
       express: app,
       onInit: async (cms) => {

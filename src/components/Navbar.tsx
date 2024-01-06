@@ -4,11 +4,14 @@ import {Icons} from "./icons"
 import NavItems from "./Navitems";
 import { buttonVariants } from "@/components/ui/button";
 import Cart from "./Cart";
+import {cookies} from "next/headers"
+import { getServerSideUser } from "@/lib/payload-utils";
+import UserAccountNav from "./UserAccountNav";
 
+const Navbar = async() =>{
 
-const Navbar = () =>{
-
-    const user = null
+    const nextCookies = cookies()
+    const {user} = await getServerSideUser(nextCookies)
 
     return (
         <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -30,7 +33,7 @@ const Navbar = () =>{
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                 {user ? null : (<Link href="/sign-in" className={buttonVariants()}> Sign In</Link>)}{/*if user is null than sign in and create account*/}
                                 {user ? null :(<span className="h-6 w-px bg-gray-200" aria-hidden="true"/>)}
-                                {user ? <p></p>:(<Link href='/sign-up' className={buttonVariants()}>Create Account</Link>)}
+                                {user ? <UserAccountNav user={user}/>:(<Link href='/sign-up' className={buttonVariants()}>Create Account</Link>)}
                                 {user ? (<span className="h-6 w-px bg-gray-200" aria-hidden="true"/>):null}
                                 {user ? null : (<div className="flex lg:ml-6"><span className="h-6 w-px bg-gray-200" aria-hidden="true"/></div>)}
                                 <div className="ml-4 flow-root lg:ml-6">
