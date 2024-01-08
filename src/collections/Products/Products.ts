@@ -112,7 +112,7 @@ export const Products: CollectionConfig = {
     },
     fields:[
         {
-            name:"images",
+            name:"image",
             type:"upload",
             relationTo:"media",
             required:true,

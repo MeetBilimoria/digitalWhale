@@ -46,7 +46,7 @@ export interface Product {
   pricedId?: string | null;
   stripId?: string | null;
   images: {
-    images: string | Media;
+    image: string | Media;
     id?: string | null;
   }[];
   updatedAt: string;
