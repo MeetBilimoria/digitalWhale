@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getPayLoadClient } from "../get-Payload";
+import { getPayloadClient } from "../get-Payload";
 import { AuthCredentialsValidator } from "../lib/validators/account-credentials-validator";
 import { publicProcedure, router } from "./trpc";
 
@@ -10,7 +10,7 @@ export const authRouter = router({
     .input(AuthCredentialsValidator)
     .mutation(async ({ input }) => {
       const { email, password } = input;
-      const payload = await getPayLoadClient();
+      const payload = await getPayloadClient();
 
       // check if user already exists
       const { docs: users } = await payload.find({
@@ -39,7 +39,7 @@ export const authRouter = router({
     .input(z.object({ token: z.string() }))
     .query(async ({ input }) => {
       const { token } = input;
-      const payload = await getPayLoadClient();
+      const payload = await getPayloadClient();
 
       const isVerified = await payload.verifyEmail({
         collection: "users",
@@ -54,7 +54,7 @@ export const authRouter = router({
     .mutation(async ({ input, ctx }) => {
       const { email, password } = input;
       const { res } = ctx;
-      const payload = await getPayLoadClient();
+      const payload = await getPayloadClient();
       try {
         await payload.login({
           collection: "users",

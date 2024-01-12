@@ -1,5 +1,5 @@
 import express from "express";
-import { getPayLoadClient } from "./get-Payload";
+import { getPayloadClient } from "./get-Payload";
 import { nextApp, nextHandler } from "./next-utils";
 import * as trpcExpress from "@trpc/server/adapters/express"
 import { appRouter } from "./trpc";
@@ -13,7 +13,7 @@ const createContext =({req,res}:trpcExpress.CreateExpressContextOptions)=>({req,
 
 export type ExpressContext = inferAsyncReturnType<typeof createContext>
 const start = async () => {
-  const payload = await getPayLoadClient({  
+  const payload = await getPayloadClient({  
     initOptions: {
       express: app,
       onInit: async (cms) => {

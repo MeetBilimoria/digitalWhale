@@ -2,11 +2,13 @@ import { z } from "zod";
 import { authRouter } from "./auth-router";
 import { publicProcedure, router } from "./trpc";
 import { QueryValidator } from "../lib/validators/QueryValidator";
-import { getPayLoadClient } from "../get-Payload";
+import { getPayloadClient } from "../get-Payload";
+import { paymentRouter } from "./payment-router";
 
 export const appRouter =  router({
   
 auth:authRouter,
+payment:paymentRouter,
 
 getInfiniteProducts:publicProcedure.input(z.object({
     limit: z.number().min(1).max(100),
@@ -15,7 +17,7 @@ getInfiniteProducts:publicProcedure.input(z.object({
 })).query(async({input})=>{
     const {cursor ,query} = input
     const {sort, limit , ...queryOpts} = query
-    const payload = await getPayLoadClient()
+    const payload = await getPayloadClient()
     
     const parsedQueryOpts: Record<
     string,

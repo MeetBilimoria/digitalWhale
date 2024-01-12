@@ -31,7 +31,7 @@ interface Args {
   initOptions?: Partial<InitOptions>;
 }
 
-export const getPayLoadClient = async ({
+export const getPayloadClient = async ({
   initOptions,
 }: Args = {}): Promise<Payload> => {
   if (!process.env.PAYLOAD_SECRET) {

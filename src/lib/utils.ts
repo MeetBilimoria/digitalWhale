@@ -11,13 +11,13 @@ export function formatPrice(
     notation? : Intl.NumberFormatOptions["notation"]
   } = {}
 ){
-  const {currency = "INR" ,notation="compact"} = options
+  const {currency = "INR" ,notation="standard"} = options
   const numricPrice = typeof price === "string" ? parseFloat(price): price
 
   return new Intl.NumberFormat("en-us",{
     style: "currency",
     currency,
     notation,
-    maximumFractionDigits: 2 
+    maximumFractionDigits: 2
   }).format(numricPrice)
 }
