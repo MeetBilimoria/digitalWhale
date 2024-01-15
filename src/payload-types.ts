@@ -39,12 +39,12 @@ export interface Product {
   user?: (string | null) | User;
   name: string;
   description: string;
-  Price: number;
+  price: number;
   category: 'ui_kits' | 'icons';
   product_files: string | ProductFile;
   approvedForSale?: ('pending' | 'approved' | 'Denied') | null;
-  pricedId?: string | null;
-  stripId?: string | null;
+  priceId?: string | null;
+  stripeId?: string | null;
   images: {
     image: string | Media;
     id?: string | null;

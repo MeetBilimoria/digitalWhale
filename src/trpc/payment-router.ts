@@ -32,7 +32,7 @@ export const paymentRouter = router({
       })
 
       const filteredProducts = products.filter((prod) =>
-        Boolean(prod.pricedId)
+        Boolean(prod.priceId)
       )
 
       const order = await payload.create({
@@ -49,7 +49,7 @@ export const paymentRouter = router({
 
       filteredProducts.forEach((product) => {
         line_items.push({
-          price: product.pricedId!,
+          price: product.priceId!,
           quantity: 1,
         })
       })

@@ -59,7 +59,7 @@ const ProductListing = ({
             {label}
           </p>
           <p className='mt-1 font-medium text-sm text-gray-900'>
-            {formatPrice(product.Price)}
+            {formatPrice(product.price)}
           </p>
         </div>
       </Link>

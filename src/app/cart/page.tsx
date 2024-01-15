@@ -32,7 +32,7 @@ const Page = () => {
   }, [])
 
   const cartTotal = items.reduce(
-    (total, { product }) => total + product.Price,
+    (total, { product }) => total + product.price,
     0
   )
 
@@ -127,7 +127,7 @@ const Page = () => {
                             </div>
 
                             <p className='mt-1 text-sm font-medium text-gray-900'>
-                              {formatPrice(product.Price)}
+                              {formatPrice(product.price)}
                             </p>
                           </div>
 

@@ -30,7 +30,7 @@ const Cart = () => {
   }, [])
 
   const cartTotal = items.reduce(
-    (total, { product }) => total + product.Price,
+    (total, { product }) => total + product.price,
     0
   )
 

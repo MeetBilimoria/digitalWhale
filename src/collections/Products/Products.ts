@@ -37,14 +37,14 @@ const addUser: BeforeChangeHook<Product> = async ({
                 name: data.name,
                 default_price_data: {
                   currency: 'USD',
-                  unit_amount: Math.round(data.Price * 100),
+                  unit_amount: Math.round(data.price * 100),
                 },
               })
   
             const updated: Product = {
               ...data,
-              stripId: createdProduct.id,
-              pricedId: createdProduct.default_price as string,
+              stripeId: createdProduct.id,
+              priceId: createdProduct.default_price as string,
             }
   
             return updated
@@ -52,15 +52,15 @@ const addUser: BeforeChangeHook<Product> = async ({
             const data = args.data as Product
   
             const updatedProduct =
-              await stripe.products.update(data.stripId!, {
+              await stripe.products.update(data.stripeId!, {
                 name: data.name,
-                default_price: data.pricedId!,
+                default_price: data.priceId!,
               })
   
             const updated: Product = {
               ...data,
-              stripId: updatedProduct.id,
-              pricedId: updatedProduct.default_price as string,
+              stripeId: updatedProduct.id,
+              priceId: updatedProduct.default_price as string,
             }
   
             return updated
@@ -163,6 +163,7 @@ const addUser: BeforeChangeHook<Product> = async ({
         admin: {
           hidden: true,
         },
+        required:false,
       },
       {
         name: 'images',
