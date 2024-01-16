@@ -139,14 +139,11 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                     createContext: createContext,
                 }));
                 app.use(function (req, res) { return (0, next_utils_1.nextHandler)(req, res); });
-                next_utils_1.nextApp.prepare().then(function () {
-                    payload.logger.info('Next.js started');
-                    app.listen(PORT, function () { return __awaiter(void 0, void 0, void 0, function () {
-                        return __generator(this, function (_a) {
-                            payload.logger.info("Next.js App URL: ".concat(process.env.NEXT_PUBLIC_SERVER_URL));
-                            return [2 /*return*/];
-                        });
-                    }); });
+                return [4 /*yield*/, next_utils_1.nextApp.prepare()];
+            case 2:
+                _a.sent();
+                app.listen(PORT, function () {
+                    payload.logger.info("Next.js App URL: ".concat(process.env.NEXT_PUBLIC_SERVER_URL));
                 });
                 return [2 /*return*/];
         }
