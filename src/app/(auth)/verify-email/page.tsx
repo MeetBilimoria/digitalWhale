@@ -19,7 +19,15 @@ const VerifyEmailPage = ({ searchParams }: PageProps) => {
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
             <div className="relative mb-4 h-60 w-60 text-muted-foreground">
-              <Image src="/whale-empty-cart.png" fill alt="Whale Image" />
+            <Image
+  src="/whale-empty-cart.png"
+  fill
+  alt="Whale Image"
+  onError={(e) => {
+    console.error("Error loading image:", e);
+   
+  }}
+/>
             </div>
             <h3 className="font-semibold text-2xl"> Check your Email</h3>
             {toEmail ? (
